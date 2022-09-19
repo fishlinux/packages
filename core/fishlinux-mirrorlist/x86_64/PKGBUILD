@@ -1,0 +1,17 @@
+# Maintainer: Miklós Kovács <miklos.kovacs@fishlinux.com>
+
+pkgname=fishlinux-mirrorlist
+pkgver=202209
+pkgrel=1
+pkgdesc="fishlinux mirror list for use by pacman"
+arch=('any')
+url="https://github.com/fishlinux/packages-core"
+license=('MIT')
+backup=(etc/pacman.d/fishlinux-mirrorlist)
+source=(fishlinux-mirrorlist)
+md5sums=('78dd367e07efbbd086e157988fc3cb26')
+
+package() {
+  mkdir -p "$pkgdir/etc/pacman.d"
+  install -m644 "$srcdir/fishlinux-mirrorlist" "$pkgdir/etc/pacman.d/"
+}
