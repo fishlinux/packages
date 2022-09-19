@@ -1,0 +1,20 @@
+on:
+  pull_request_target:
+    branches:
+      - master
+    types:
+      - closed
+
+jobs:
+  push_to_build_queue:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: |
+        PACKAGE_REPOSITORY=$(echo "${{ github.head_ref }}" | cut -d '/' -f 1)
+        PACKAGE_NAME=$(echo "${{ github.head_ref }}" | cut -d '/' -f 2)
+        PACKAGE_ARCH=$(echo "${{ github.head_ref }}" | cut -d '/' -f 3)
+        PACKAGE_COMMIT=${{ github.sha }}
+        echo "{\"repository\":\"$PACKAGE_REPOSITORY\",\"package\":\"$PACKAGE_NAME\",\"arch\":\"$PACKAGE_ARCH\",\"commit\":\"$PACKAGE_COMMIT\"}" > data.json
+        curl --header "Content-Type: application/json" --data @data.json "${{ secrets.BUILDER_TARGET_URL }}"

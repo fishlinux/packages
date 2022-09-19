@@ -1,0 +1,18 @@
+on:
+  pull_request_target:
+    branches:
+      - master
+    types:
+      - opened
+      - reopened
+
+jobs:
+  test-build:
+    if: startsWith(github.head_ref, 'core/') || startsWith(github.head_ref, 'extra/')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+    - run: |
+        docker run --pull always -v ${{ github.workspace }}/${{ github.head_ref }}:/home/builder/workdir:ro --rm fishlinux/package-builder:latest
