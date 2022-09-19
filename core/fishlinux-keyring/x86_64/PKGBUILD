@@ -1,0 +1,23 @@
+# Maintainer: Miklós Kovács <miklos.kovacs@fishlinux.com>
+
+pkgname=fishlinux-keyring
+pkgver=202209
+pkgrel=4
+pkgdesc='fishlinux keyring'
+arch=('any')
+url='https://github.com/fishlinux/keyring'
+license=('MIT')
+install="${pkgname}.install"
+source=('https://raw.githubusercontent.com/fishlinux/keyring/master/Makefile'
+        'https://raw.githubusercontent.com/fishlinux/keyring/master/fishlinux.gpg'
+        'https://raw.githubusercontent.com/fishlinux/keyring/master/fishlinux-revoked'
+        'https://raw.githubusercontent.com/fishlinux/keyring/master/fishlinux-trusted')
+sha512sums=('cd8ddb70e25bb579b825646bed913a5faedd0b6294ab830181e6690dad378a6c06f96a729102b1c62cbd1a6a61224359db108c4036d87d681267727983d381ad'
+            '4f8b1b88fd72d9be7dd00678cce5ba1f320483f5e3d73c42281edbed7750f6e053d22e9115a1078cbd866a075534c501e34edbda93a80f4f2ed14aeee87e9c4f'
+            'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e'
+            'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e')
+
+package() {
+	cd "${srcdir}"
+	make PREFIX=/usr DESTDIR=${pkgdir} install
+}
