@@ -1,0 +1,6 @@
+##
+## fishlinux repository mirrorlist
+##
+
+## Master
+Server = https://pacman-repo.fishlinux.com/$repo/$arch
